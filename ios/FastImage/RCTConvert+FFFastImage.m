@@ -16,7 +16,8 @@ RCT_ENUM_CONVERTER(FFFCacheControl, (@{
                                        }), FFFCacheControlImmutable, integerValue);
 
 + (FFFastImageSource *)FFFastImageSource:(id)json {
-    if (!json) {
+    // A null source (e.g. a null entry passed to preload).
+    if (!json || json == (id)kCFNull) {
         return nil;
     }
     
@@ -44,6 +45,14 @@ RCT_ENUM_CONVERTER(FFFCacheControl, (@{
     }
     
     FFFastImageSource *imageSource = [[FFFastImageSource alloc] initWithURL:uri priority:priority headers:headers cacheControl:cacheControl];
+    id priorityJSON = json[@"priority"];
+    imageSource.hasPriority = priorityJSON && priorityJSON != (id)kCFNull;
+    NSString *cacheKey = [self NSString:json[@"cacheKey"]];
+    imageSource.cacheKey = cacheKey.length > 0 ? cacheKey : nil;
+    id memoryCache = json[@"memoryCache"];
+    imageSource.memoryCache = memoryCache && memoryCache != (id)kCFNull ? [self BOOL:memoryCache] : YES;
+    CGFloat scale = json[@"scale"] && json[@"scale"] != (id)kCFNull ? [self CGFloat:json[@"scale"]] : 1;
+    imageSource.pixelCount = [self CGFloat:json[@"width"]] * [self CGFloat:json[@"height"]] * scale * scale;
     
     return imageSource;
 }

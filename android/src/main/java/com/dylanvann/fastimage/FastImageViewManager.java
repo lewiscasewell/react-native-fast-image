@@ -14,14 +14,17 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.LayoutShadowNode;
 import com.facebook.react.uimanager.SimpleViewManager;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.views.imagehelper.ResourceDrawableIdHelper;
 
 import java.util.List;
@@ -37,9 +40,6 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
     static final String REACT_ON_PROGRESS_EVENT = "onFastImageProgress";
     private static final Map<String, List<FastImageViewWithUrl>> VIEWS_FOR_URLS = new WeakHashMap<>();
 
-    @Nullable
-    private RequestManager requestManager = null;
-
     @NonNull
     @Override
     public String getName() {
@@ -49,16 +49,31 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
     @NonNull
     @Override
     protected FastImageViewWithUrl createViewInstance(@NonNull ThemedReactContext reactContext) {
+        // Each view keeps the RequestManager for its own Activity. A single one
+        // shared by all views kept the last view's Activity alive after it was
+        // destroyed, and gave views another Activity's manager (#492).
+        RequestManager requestManager = null;
+        FastImageGlide.get(reactContext);
         if (isValidContextForGlide(reactContext)) {
             requestManager = Glide.with(reactContext);
+        } else if (getActivityFromContext(reactContext) == null) {
+            // Not in an Activity (e.g. a root view created with the application
+            // context): load with the application context, instead of leaving
+            // requestManager null and never loading (#520).
+            requestManager = Glide.with(reactContext.getApplicationContext());
         }
 
-        return new FastImageViewWithUrl(reactContext);
+        return new FastImageViewWithUrl(reactContext, requestManager);
     }
 
     @ReactProp(name = "source")
     public void setSource(FastImageViewWithUrl view, @Nullable ReadableMap source) {
         view.setSource(source);
+    }
+
+    @ReactProp(name = "sources")
+    public void setSources(FastImageViewWithUrl view, @Nullable ReadableArray sources) {
+        view.setSources(sources);
     }
 
     @ReactProp(name = "defaultSource")
@@ -77,10 +92,59 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         }
     }
 
+    @ReactProp(name = "recyclingKey")
+    public void setRecyclingKey(FastImageViewWithUrl view, @Nullable String recyclingKey) {
+        view.setRecyclingKey(recyclingKey);
+    }
+
+    @ReactProp(name = "loopCount", defaultInt = -1)
+    public void setLoopCount(FastImageViewWithUrl view, int loopCount) {
+        view.setLoopCount(loopCount);
+    }
+
+    @ReactProp(name = "imageRendering")
+    public void setImageRendering(FastImageViewWithUrl view, @Nullable String imageRendering) {
+        view.setImageRendering(imageRendering);
+    }
+
+    @ReactProp(name = "blurRadius")
+    public void setBlurRadius(FastImageViewWithUrl view, float blurRadius) {
+        view.setBlurRadius(PixelUtil.toPixelFromDIP(blurRadius));
+    }
+
+    @ReactProp(name = "transitionDuration")
+    public void setTransitionDuration(FastImageViewWithUrl view, int transitionDuration) {
+        view.setTransitionDuration(transitionDuration);
+    }
+
+    @ReactProp(name = "transitionBetweenImages")
+    public void setTransitionBetweenImages(FastImageViewWithUrl view, boolean betweenImages) {
+        view.setTransitionBetweenImages(betweenImages);
+    }
+
+    @ReactProp(name = "transitionSkipOnCacheHit")
+    public void setTransitionSkipOnCacheHit(FastImageViewWithUrl view, @Nullable String skipOnCacheHit) {
+        view.setTransitionSkipOnCacheHit(skipOnCacheHit);
+    }
+
+    @ReactProp(name = "paused")
+    public void setPaused(FastImageViewWithUrl view, boolean paused) {
+        view.setPaused(paused);
+    }
+
+    // Set when the image has an onProgress (see onProgress).
+    @ReactProp(name = "trackProgress")
+    public void setTrackProgress(FastImageViewWithUrl view, boolean trackProgress) {
+        view.trackProgress = trackProgress;
+    }
+
     @ReactProp(name = "resizeMode")
     public void setResizeMode(FastImageViewWithUrl view, String resizeMode) {
-        final FastImageViewWithUrl.ScaleType scaleType = FastImageViewConverter.getScaleType(resizeMode);
-        view.setScaleType(scaleType);
+        // repeat fills the view with the tiled image (see setImageDrawable).
+        boolean repeat = "repeat".equals(resizeMode);
+        final FastImageViewWithUrl.ScaleType scaleType =
+                repeat ? FastImageViewWithUrl.ScaleType.FIT_XY : FastImageViewConverter.getScaleType(resizeMode);
+        view.setResizeMode(scaleType, repeat);
     }
 
     @ReactProp(name = "maxBufferSize")
@@ -93,17 +157,11 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
     @Override
     public void onDropViewInstance(@NonNull FastImageViewWithUrl view) {
         // This will cancel existing requests.
-        view.clearView(requestManager);
+        view.clearView(view.requestManager);
 
-        if (view.glideUrl != null) {
-            final String key = view.glideUrl.toString();
-            FastImageOkHttpProgressGlideModule.forget(key);
-            List<FastImageViewWithUrl> viewsForKey = VIEWS_FOR_URLS.get(key);
-            if (viewsForKey != null) {
-                viewsForKey.remove(view);
-                if (viewsForKey.size() == 0) VIEWS_FOR_URLS.remove(key);
-            }
-        }
+        // Same key as when the view was tracked (toStringUrl, not toString,
+        // which differ for urls that need escaping).
+        view.untrackUrl(VIEWS_FOR_URLS);
 
         super.onDropViewInstance(view);
     }
@@ -119,18 +177,19 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
                 .build();
     }
 
+    // Sends the progress to the views loading the url that have an onProgress:
+    // the others would send an event to JS for every chunk, for nothing (and
+    // on the New Architecture each would log an unhandled event).
     @Override
     public void onProgress(String key, long bytesRead, long expectedLength) {
         List<FastImageViewWithUrl> viewsForKey = VIEWS_FOR_URLS.get(key);
         if (viewsForKey != null) {
             for (FastImageViewWithUrl view : viewsForKey) {
+                if (!view.trackProgress) continue;
                 WritableMap event = new WritableNativeMap();
                 event.putInt("loaded", (int) bytesRead);
                 event.putInt("total", (int) expectedLength);
-                ThemedReactContext context = (ThemedReactContext) view.getContext();
-                RCTEventEmitter eventEmitter = context.getJSModule(RCTEventEmitter.class);
-                int viewId = view.getId();
-                eventEmitter.receiveEvent(viewId, REACT_ON_PROGRESS_EVENT, event);
+                FastImageEvents.send(view, REACT_ON_PROGRESS_EVENT, event);
             }
         }
     }
@@ -148,6 +207,20 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         }
 
         return !isActivityDestroyed(activity);
+    }
+
+    // A view's context is the ThemedReactContext it was created with, but below
+    // Android 5 (API 21) AppCompatImageView wraps it in a TintContextWrapper, so
+    // it can't be cast directly (#840). Unwrap until the ReactContext.
+    @Nullable
+    static ReactContext getReactContext(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof ReactContext) {
+                return (ReactContext) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 
     private static Activity getActivityFromContext(final Context context) {
@@ -182,9 +255,21 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
 
     }
 
+    // Legacy architecture only; the New Architecture doesn't use shadow nodes.
+    @NonNull
+    @Override
+    public LayoutShadowNode createShadowNodeInstance() {
+        return new FastImageShadowNode();
+    }
+
+    @Override
+    public void updateExtraData(@NonNull FastImageViewWithUrl view, Object extraData) {
+        if (extraData == FastImageShadowNode.ZERO_LAYOUT) view.onZeroLayout();
+    }
+
     @Override
     protected void onAfterUpdateTransaction(@NonNull FastImageViewWithUrl view) {
         super.onAfterUpdateTransaction(view);
-        view.onAfterUpdate(this, requestManager, VIEWS_FOR_URLS);
+        view.onAfterUpdate(this, view.requestManager, VIEWS_FOR_URLS);
     }
 }

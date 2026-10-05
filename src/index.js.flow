@@ -7,13 +7,24 @@ export type OnLoadEvent = SyntheticEvent<
     $ReadOnly<{
         width: number,
         height: number,
+        // The view's React tag. Missing on Android with the legacy architecture.
+        // TODO: make it required once the New Architecture is the minimum.
+        target?: number,
     }>,
+>
+
+export type OnErrorEvent = SyntheticEvent<
+    $ReadOnly<{|
+        error: string,
+    |}>,
 >
 
 export type OnProgressEvent = SyntheticEvent<
     $ReadOnly<{|
         loaded: number,
         total: number,
+        // loaded / total, from 0 to 1.
+        progress: number,
     |}>,
 >
 
@@ -22,6 +33,7 @@ export type ResizeMode = $ReadOnly<{|
     cover: 'cover',
     stretch: 'stretch',
     center: 'center',
+    repeat: 'repeat',
 |}>
 
 export type Priority = $ReadOnly<{|
@@ -40,30 +52,95 @@ export type ResizeModes = $Values<ResizeMode>
 export type Priorities = $Values<Priority>
 export type CacheControls = $Values<CacheControl>
 
-export type PreloadFn = (sources: Array<FastImageSource>) => void
+export type LoadResult =
+    | {| ok: true, width: number, height: number |}
+    | {| ok: false, error: string |}
+
+export type CacheLimits = {|
+    maxDiskSize?: ?number,
+    maxDiskAge?: ?number,
+    maxMemorySize?: ?number,
+|}
+
+export type CacheState = {|
+    maxDiskSize?: number,
+    maxDiskAge?: number,
+    maxMemorySize?: number,
+    diskSize?: number,
+|}
+
+export type CachePathResult =
+    | {| ok: true, path: string |}
+    | {| ok: false, error: string |}
+
+export type Transition = $ReadOnly<{|
+    duration?: ?number,
+    betweenImages?: ?boolean,
+    skipOnCacheHit?: ?('none' | 'memory' | 'all'),
+|}>
+
+export type PreloadSuccess = {|
+    uri: string,
+    ok: true,
+    width: number,
+    height: number,
+|}
+
+export type PreloadFailure = {|
+    uri?: string,
+    ok: false,
+    error: string,
+|}
+
+export type PreloadResult = PreloadSuccess | PreloadFailure
+
+export type PreloadFn = (
+    sources: Array<FastImageSource>,
+) => Promise<Array<PreloadResult>>
 export type FastImageSource = {
     uri?: string,
     headers?: Object,
     priority?: Priorities,
     cache?: CacheControls,
+    cacheKey?: string,
+    memoryCache?: boolean,
+    width?: number,
+    height?: number,
+    scale?: number,
 }
 
 export type FastImageProps = $ReadOnly<{|
     ...ViewProps,
-    onError?: ?() => void,
+    onError?: ?(event: OnErrorEvent) => void,
     onLoad?: ?(event: OnLoadEvent) => void,
-    onLoadEnd?: ?() => void,
+    onLoadEnd?: ?(result: LoadResult) => void,
     onLoadStart?: ?() => void,
     onProgress?: ?(event: OnProgressEvent) => void,
 
-    source?: ?(FastImageSource | number),
+    source?: ?(FastImageSource | Array<FastImageSource> | number),
     defaultSource?: ?number,
 
     tintColor?: number | string,
     resizeMode?: ?ResizeModes,
     fallback?: ?boolean,
+    recyclingKey?: ?string,
+    loop?: ?(boolean | number),
+    imageRendering?: ?('auto' | 'smooth' | 'pixelated'),
+    paused?: ?boolean,
+    transition?: ?(boolean | number | Transition),
+    downsample?: ?boolean,
+    blurRadius?: ?number,
     testID?: ?string,
 |}>
+
+export type FastImageBackgroundProps = $ReadOnly<{|
+    ...FastImageProps,
+    imageStyle?: $PropertyType<ViewProps, 'style'>,
+    imageRef?: React$Ref<any>,
+    children?: React$Node,
+|}>
+
+declare export var FastImageBackground: React$ComponentType<FastImageBackgroundProps>
 
 declare export default class FastImage extends React$Component<FastImageProps> {
     static resizeMode: ResizeMode;
@@ -72,4 +149,10 @@ declare export default class FastImage extends React$Component<FastImageProps> {
     static preload: PreloadFn;
     static clearMemoryCache: () => Promise<void>;
     static clearDiskCache: () => Promise<void>;
+    static getCachePath: (source: FastImageSource) => Promise<CachePathResult>;
+    static configureCache: (limits?: CacheLimits) => Promise<CacheState>;
+    static writeToCache: (
+        source: FastImageSource,
+        file: string,
+    ) => Promise<CachePathResult>;
 }

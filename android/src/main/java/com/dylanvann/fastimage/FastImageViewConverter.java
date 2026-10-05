@@ -19,6 +19,7 @@ import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.NoSuchKeyException;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.ReadableType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,12 +51,26 @@ class FastImageViewConverter {
                 put("center", ScaleType.CENTER_INSIDE);
             }};
 
+    // Whether the source has a uri to load (not null, missing or blank).
+    static boolean hasUri(@Nullable ReadableMap source) {
+        if (source == null || !source.hasKey("uri") || source.isNull("uri")) return false;
+        String uri = source.getString("uri");
+        return uri != null && !uri.trim().isEmpty();
+    }
+
     // Resolve the source uri to a file path that android understands.
     static @Nullable
     FastImageSource getImageSource(Context context, @Nullable ReadableMap source) {
-        return source == null
-                ? null
-                : new FastImageSource(context, source.getString("uri"), getHeaders(source));
+        if (source == null) return null;
+        FastImageSource imageSource = new FastImageSource(context, source.getString("uri"), getHeaders(source));
+        imageSource.setWebCache(getCacheControl(source) == FastImageCacheControl.WEB);
+        if (source.hasKey("memoryCache") && source.getType("memoryCache") == ReadableType.Boolean) {
+            imageSource.setMemoryCache(source.getBoolean("memoryCache"));
+        }
+        if (source.hasKey("cacheKey") && source.getType("cacheKey") == ReadableType.String) {
+            imageSource.setCacheKey(source.getString("cacheKey"));
+        }
+        return imageSource;
     }
 
     static Headers getHeaders(ReadableMap source) {
@@ -79,7 +94,7 @@ class FastImageViewConverter {
         return headers;
     }
 
-    static RequestOptions getOptions(Context context, FastImageSource imageSource, ReadableMap source) {
+    static RequestOptions getOptions(Context context, @Nullable FastImageSource imageSource, @Nullable ReadableMap source) {
         // Get priority.
         final Priority priority = FastImageViewConverter.getPriority(source);
         // Get cache control method.
@@ -104,11 +119,14 @@ class FastImageViewConverter {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(diskCacheStrategy)
                 .onlyRetrieveFromCache(onlyFromCache)
-                .skipMemoryCache(skipMemoryCache)
+                // memoryCache false: only kept on disk.
+                .skipMemoryCache(skipMemoryCache || (imageSource != null && !imageSource.isMemoryCache()))
                 .priority(priority)
-                .placeholder(TRANSPARENT_DRAWABLE);
+                .placeholder(TRANSPARENT_DRAWABLE)
+                .set(FastImageGlide.REQUEST, true);
 
-        if (imageSource.isResource()) {
+        // imageSource is null when only a defaultSource is shown.
+        if (imageSource != null && imageSource.isResource()) {
             // Every local resource (drawable) in Android has its own unique numeric id, which are
             // generated at build time. Although these ids are unique, they are not guaranteed unique
             // across builds. The underlying glide implementation caches these resources. To make
@@ -121,7 +139,17 @@ class FastImageViewConverter {
         return options;
     }
 
-    private static FastImageCacheControl getCacheControl(ReadableMap source) {
+    // The source's cacheKey, or null without one.
+    @Nullable
+    static String getCacheKey(@Nullable ReadableMap source) {
+        if (source == null || !source.hasKey("cacheKey") || source.getType("cacheKey") != ReadableType.String) {
+            return null;
+        }
+        String cacheKey = source.getString("cacheKey");
+        return cacheKey == null || cacheKey.isEmpty() ? null : cacheKey;
+    }
+
+    static FastImageCacheControl getCacheControl(ReadableMap source) {
         return getValueFromSource("cache", "immutable", FAST_IMAGE_CACHE_CONTROL_MAP, source);
     }
 

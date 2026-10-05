@@ -5,7 +5,7 @@ name: Release
 # file, so there is no NPM token to manage. Requires `id-token: write` and npm >= 11.5.1.
 #
 # To cut a release: bump "version" in package.json on main, then publish a GitHub
-# Release tagged v<version> (e.g. v8.6.6), or run this workflow manually.
+# Release tagged v<version> (e.g. v8.31.2), or run this workflow manually.
 
 on:
   release:
@@ -25,21 +25,23 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version-file: .node-version
 
-      # Trusted Publishing (OIDC) requires npm >= 11.5.1; Node 20 ships npm 10.x.
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1.
       - name: Upgrade npm
         run: npm install -g npm@latest
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: bun run build:package
 
-      # `dv-scripts build` resets package.json repository metadata to the upstream
-      # (DylanVann) repo, which fails Trusted Publishing provenance validation
-      # (provenance expects this repo). Re-assert it on the built package.json.
+      # Provenance validation expects this repo, not the upstream one.
       - name: Restore repository metadata for provenance
         run: |
           npm pkg set repository.type=git

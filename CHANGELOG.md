@@ -1,3 +1,606 @@
+## [8.31.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.31.1...v8.31.2) (2026-10-05)
+
+
+### Bug Fixes
+
+* **ios:** load images in the app by name, e.g. from its asset catalog ([#1243](https://github.com/DylanVann/react-native-fast-image/issues/1243)) ([d436d41](https://github.com/DylanVann/react-native-fast-image/commit/d436d419ef4525520dcc065151ca2002413248be))
+
+## [8.31.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.31.0...v8.31.1) (2026-10-04)
+
+
+### Bug Fixes
+
+* **android:** work in apps that have expo-image ([#1241](https://github.com/DylanVann/react-native-fast-image/issues/1241)) ([56f2d67](https://github.com/DylanVann/react-native-fast-image/commit/56f2d67969728bcd464d8dc6de4746cddd19c3eb))
+
+# [8.31.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.30.1...v8.31.0) (2026-10-04)
+
+
+### Features
+
+* **ios:** animate AVIF images ([#1239](https://github.com/DylanVann/react-native-fast-image/issues/1239)) ([ad0bc05](https://github.com/DylanVann/react-native-fast-image/commit/ad0bc05bced69274b047ce28e7986a6b889dc6db))
+
+## [8.30.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.30.0...v8.30.1) (2026-10-04)
+
+
+### Bug Fixes
+
+* **android:** show a paused APNG's first frame ([#1237](https://github.com/DylanVann/react-native-fast-image/issues/1237)) ([19db372](https://github.com/DylanVann/react-native-fast-image/commit/19db3721809ff4abcc2dd0d22e6cc50635419384))
+
+# [8.30.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.29.0...v8.30.0) (2026-10-04)
+
+
+### Bug Fixes
+
+* **android:** download an image once when a view loads it while it's being preloaded ([#1231](https://github.com/DylanVann/react-native-fast-image/issues/1231)) ([66a5f0e](https://github.com/DylanVann/react-native-fast-image/commit/66a5f0e34c5ec37563f0ed208e67fc75e67c7539))
+
+
+### Features
+
+* **android:** animate animated WebP and AVIF (Glide 4.16 by default) ([#1229](https://github.com/DylanVann/react-native-fast-image/issues/1229)) ([2a0130a](https://github.com/DylanVann/react-native-fast-image/commit/2a0130a932fa3dd4b1af6188b85b0756a653f6ef))
+* **android:** animate APNG images ([#1228](https://github.com/DylanVann/react-native-fast-image/issues/1228)) ([6cd5ece](https://github.com/DylanVann/react-native-fast-image/commit/6cd5ecef16435bd0ed21ec9deed57317fc0fec29))
+* **ios:** include SDWebImagePhotosPlugin, so photo library images load without installing it ([#1235](https://github.com/DylanVann/react-native-fast-image/issues/1235)) ([2c789c6](https://github.com/DylanVann/react-native-fast-image/commit/2c789c6e06f4a8971ac8a681a91e2a78116d68de))
+
+
+### Performance Improvements
+
+* **android:** decode animated WebP copies off the main thread, and reuse Glide's ([#1227](https://github.com/DylanVann/react-native-fast-image/issues/1227)) ([6d42e5d](https://github.com/DylanVann/react-native-fast-image/commit/6d42e5d1b93476a33bee32aee8073df2e9e531ab))
+
+# [8.29.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.28.1...v8.29.0) (2026-10-02)
+
+
+### Features
+
+* **ios:** register an animated WebP coder by default ([#1222](https://github.com/DylanVann/react-native-fast-image/issues/1222)) ([793f988](https://github.com/DylanVann/react-native-fast-image/commit/793f988311b28b91e9db5ea09a45119472e6906b)), closes [#488](https://github.com/DylanVann/react-native-fast-image/issues/488)
+
+## [8.28.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.28.0...v8.28.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **android:** only send progress events for images with onProgress ([#1225](https://github.com/DylanVann/react-native-fast-image/issues/1225)) ([5fe7667](https://github.com/DylanVann/react-native-fast-image/commit/5fe7667c3c647d2d606321d2e015ea813186cc43))
+
+# [8.28.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.27.4...v8.28.0) (2026-10-01)
+
+
+### Features
+
+* **ios:** downsample by default ([#1218](https://github.com/DylanVann/react-native-fast-image/issues/1218)) ([8bc205f](https://github.com/DylanVann/react-native-fast-image/commit/8bc205fbe8a845344588352d3b9db46e8e7b3bd6))
+
+## [8.27.4](https://github.com/DylanVann/react-native-fast-image/compare/v8.27.3...v8.27.4) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ios:** don't crash on a source without a url when downsampling ([#1215](https://github.com/DylanVann/react-native-fast-image/issues/1215)) ([f8d24c0](https://github.com/DylanVann/react-native-fast-image/commit/f8d24c0ce436e0ea44503a36d8bda526225242b0))
+* **ios:** keep SVGs as vector images when downsampling ([#1216](https://github.com/DylanVann/react-native-fast-image/issues/1216)) ([fb6dabd](https://github.com/DylanVann/react-native-fast-image/commit/fb6dabd723f354f2f014de94ea625e296a1f9aef))
+* **ios:** share a download between downsampled and full-size loads ([#1217](https://github.com/DylanVann/react-native-fast-image/issues/1217)) ([28eafc4](https://github.com/DylanVann/react-native-fast-image/commit/28eafc45c9f6cd7735fc734fb42ed177668699b3))
+
+## [8.27.3](https://github.com/DylanVann/react-native-fast-image/compare/v8.27.2...v8.27.3) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ios:** don't keep a page with an inline SVG in the web image cache ([#1214](https://github.com/DylanVann/react-native-fast-image/issues/1214)) ([8fadf23](https://github.com/DylanVann/react-native-fast-image/commit/8fadf23b51ee772ac0014ec266b4f54e8311d7c6))
+
+## [8.27.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.27.1...v8.27.2) (2026-10-01)
+
+
+### Bug Fixes
+
+* **ios:** load downsampled images in the order they're mounted ([#1213](https://github.com/DylanVann/react-native-fast-image/issues/1213)) ([5db1a95](https://github.com/DylanVann/react-native-fast-image/commit/5db1a9518a06acf8bcc88b91ea3e893c92a7e882))
+
+## [8.27.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.27.0...v8.27.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* **types:** take ImageStyle's radii, opacity and colors from ViewStyle ([#1211](https://github.com/DylanVann/react-native-fast-image/issues/1211)) ([acfb962](https://github.com/DylanVann/react-native-fast-image/commit/acfb962645b4b1955e286a289a0b88fbf03099a9))
+
+# [8.27.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.26.0...v8.27.0) (2026-10-01)
+
+
+### Features
+
+* load SVG images when the app has an SVG library ([#1206](https://github.com/DylanVann/react-native-fast-image/issues/1206)) ([012f9cf](https://github.com/DylanVann/react-native-fast-image/commit/012f9cf37bb773c3c8652805e968ad6e7af2ba22))
+
+# [8.26.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.25.0...v8.26.0) (2026-09-30)
+
+
+### Features
+
+* pick one of several sources for the view's size ([#1201](https://github.com/DylanVann/react-native-fast-image/issues/1201)) ([efa1c7a](https://github.com/DylanVann/react-native-fast-image/commit/efa1c7aeddb67af028871f25c2a04a6932a1ee1b))
+
+# [8.25.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.24.0...v8.25.0) (2026-09-30)
+
+
+### Features
+
+* add resizeMode repeat to tile the image ([#1196](https://github.com/DylanVann/react-native-fast-image/issues/1196)) ([4227c23](https://github.com/DylanVann/react-native-fast-image/commit/4227c23a3cb3f54ecb231d419aa6e5e478bc6fd3))
+
+# [8.24.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.23.0...v8.24.0) (2026-09-30)
+
+
+### Features
+
+* **ios:** load photo library (ph://) images with SDWebImagePhotosPlugin ([#1199](https://github.com/DylanVann/react-native-fast-image/issues/1199)) ([6f8bd31](https://github.com/DylanVann/react-native-fast-image/commit/6f8bd3157169730e8935bbed3c660213ccc221fa))
+
+# [8.23.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.22.0...v8.23.0) (2026-09-30)
+
+
+### Features
+
+* add a minimal web version for react-native-web ([#1197](https://github.com/DylanVann/react-native-fast-image/issues/1197)) ([65759ad](https://github.com/DylanVann/react-native-fast-image/commit/65759ada0ff2b7fff40cb18e72a6d64d8f65db42))
+
+# [8.22.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.21.0...v8.22.0) (2026-09-30)
+
+
+### Features
+
+* add transition to fade images in when they load ([#1164](https://github.com/DylanVann/react-native-fast-image/issues/1164)) ([0946fcf](https://github.com/DylanVann/react-native-fast-image/commit/0946fcf5068330a215966bc929d5a9e4c1cdbf7e))
+
+# [8.21.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.20.0...v8.21.0) (2026-09-30)
+
+
+### Features
+
+* add blurRadius to blur the image ([#1193](https://github.com/DylanVann/react-native-fast-image/issues/1193)) ([8ffbd26](https://github.com/DylanVann/react-native-fast-image/commit/8ffbd260630b9a05df009232a54c3d56fb5626c8))
+
+# [8.20.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.19.1...v8.20.0) (2026-09-30)
+
+
+### Features
+
+* add a 0–1 progress to onProgress's event ([#1194](https://github.com/DylanVann/react-native-fast-image/issues/1194)) ([926ee06](https://github.com/DylanVann/react-native-fast-image/commit/926ee06a08c2612e5652b3d60a827f75f5b26a13))
+
+## [8.19.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.19.0...v8.19.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* **ios:** tint images with the view's tintColor, and tint animated images' frames ([#1195](https://github.com/DylanVann/react-native-fast-image/issues/1195)) ([64743cf](https://github.com/DylanVann/react-native-fast-image/commit/64743cfe10d5be0d6e9b5da609cb3c36e12bd67b))
+
+# [8.19.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.18.2...v8.19.0) (2026-09-30)
+
+
+### Bug Fixes
+
+* **ios:** don't store web responses that aren't images in the HTTP cache ([#1181](https://github.com/DylanVann/react-native-fast-image/issues/1181)) ([3ec8d60](https://github.com/DylanVann/react-native-fast-image/commit/3ec8d6040b5981b0cd504c2856d880d5aacb22eb))
+
+
+### Features
+
+* add FastImage.configureCache to set the image cache's limits ([#1183](https://github.com/DylanVann/react-native-fast-image/issues/1183)) ([a992475](https://github.com/DylanVann/react-native-fast-image/commit/a9924751f994415a211299459ac03dc0c09b0452))
+* add FastImage.writeToCache to store a local image as a source's image ([#1179](https://github.com/DylanVann/react-native-fast-image/issues/1179)) ([0d67287](https://github.com/DylanVann/react-native-fast-image/commit/0d67287478324c423b2d8f133d0f433f3a2f699c))
+* let getCachePath look up a source by its cacheKey alone ([#1180](https://github.com/DylanVann/react-native-fast-image/issues/1180)) ([e44c494](https://github.com/DylanVann/react-native-fast-image/commit/e44c494ca4efa3d5cbadb53de4e74146ddd9dff4))
+
+## [8.18.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.18.1...v8.18.2) (2026-09-30)
+
+
+### Bug Fixes
+
+* **android:** keep Glide modules' constructors in release builds ([#1187](https://github.com/DylanVann/react-native-fast-image/issues/1187)) ([604d121](https://github.com/DylanVann/react-native-fast-image/commit/604d1211d56b12ac7e52e03d2102243f0fb74901))
+* **android:** keep React Native's event dispatcher in release builds ([#1188](https://github.com/DylanVann/react-native-fast-image/issues/1188)) ([ab3d9a5](https://github.com/DylanVann/react-native-fast-image/commit/ab3d9a5fa08ad859284943b01e730b37883d6647))
+
+## [8.18.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.18.0...v8.18.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* **android:** ship the ProGuard rules with the library ([#1185](https://github.com/DylanVann/react-native-fast-image/issues/1185)) ([58dc5b2](https://github.com/DylanVann/react-native-fast-image/commit/58dc5b2d0b86288ecbad6f973615bcb940b4ca60))
+
+# [8.18.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.17.2...v8.18.0) (2026-09-29)
+
+
+### Features
+
+* add FastImage.getCachePath to get an image's file in the disk cache ([#1162](https://github.com/DylanVann/react-native-fast-image/issues/1162)) ([f116677](https://github.com/DylanVann/react-native-fast-image/commit/f116677ca0cf8da1b109d9c382db7aba9122c21c))
+
+## [8.17.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.17.1...v8.17.2) (2026-09-29)
+
+
+### Bug Fixes
+
+* don't keep responses that aren't images in the disk cache ([#1178](https://github.com/DylanVann/react-native-fast-image/issues/1178)) ([22fafe6](https://github.com/DylanVann/react-native-fast-image/commit/22fafe6cb5cb2958b45819ec323661ec46ff620f))
+
+## [8.17.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.17.0...v8.17.1) (2026-09-29)
+
+
+### Bug Fixes
+
+* **ios:** try failed urls again in preload ([#1177](https://github.com/DylanVann/react-native-fast-image/issues/1177)) ([12e626d](https://github.com/DylanVann/react-native-fast-image/commit/12e626dfb32c177a47fd3e6faf0063c8d83b5a65))
+
+# [8.17.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.16.2...v8.17.0) (2026-09-28)
+
+
+### Features
+
+* add source.memoryCache to keep images on disk only ([#1176](https://github.com/DylanVann/react-native-fast-image/issues/1176)) ([fb9b4a6](https://github.com/DylanVann/react-native-fast-image/commit/fb9b4a6685eed6bf6a5ff13403e675a267e6a980))
+
+## [8.16.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.16.1...v8.16.2) (2026-09-28)
+
+
+### Bug Fixes
+
+* clear the HTTP cache of web images in clearDiskCache ([#1174](https://github.com/DylanVann/react-native-fast-image/issues/1174)) ([75009ac](https://github.com/DylanVann/react-native-fast-image/commit/75009ac2e351d370a7dfd79b2a9894e4a38682eb))
+
+## [8.16.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.16.0...v8.16.1) (2026-09-28)
+
+
+### Bug Fixes
+
+* **ios:** make preload follow source.cache ([#1173](https://github.com/DylanVann/react-native-fast-image/issues/1173)) ([f26f033](https://github.com/DylanVann/react-native-fast-image/commit/f26f033bd55acff730a833853fccfc32f10ca539))
+
+# [8.16.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.15.0...v8.16.0) (2026-09-28)
+
+
+### Features
+
+* add source.cacheKey to cache an image under a key instead of its url ([#1161](https://github.com/DylanVann/react-native-fast-image/issues/1161)) ([c7964bd](https://github.com/DylanVann/react-native-fast-image/commit/c7964bd10884d3d225fad7eb46d412fec5f1ad9f)), thanks [@paulrostorp](https://github.com/paulrostorp)
+
+# [8.15.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.14.0...v8.15.0) (2026-09-28)
+
+
+### Features
+
+* pass the load's result to onLoadEnd ([#1172](https://github.com/DylanVann/react-native-fast-image/issues/1172)) ([2a24373](https://github.com/DylanVann/react-native-fast-image/commit/2a2437377e6f5c75c896431166ca5263154cf599))
+
+# [8.14.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.13.2...v8.14.0) (2026-09-28)
+
+
+### Features
+
+* add FastImageBackground to show content on top of an image ([#1171](https://github.com/DylanVann/react-native-fast-image/issues/1171)) ([957712b](https://github.com/DylanVann/react-native-fast-image/commit/957712b11aaf57a3c41696673025d04b789b955f))
+
+## [8.13.2](https://github.com/DylanVann/react-native-fast-image/compare/v8.13.1...v8.13.2) (2026-09-28)
+
+
+### Bug Fixes
+
+* **android:** release a view's image when it's removed or its source is cleared ([#1165](https://github.com/DylanVann/react-native-fast-image/issues/1165)) ([00adb71](https://github.com/DylanVann/react-native-fast-image/commit/00adb71ad09f6616fb24151111e7331f83880e05))
+
+## [8.13.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.13.0...v8.13.1) (2026-09-26)
+
+
+### Bug Fixes
+
+* **ios:** don't report or show a load replaced by a new source ([#1159](https://github.com/DylanVann/react-native-fast-image/issues/1159)) ([b20fc83](https://github.com/DylanVann/react-native-fast-image/commit/b20fc836a069cf0642d416df93664579b094b6d9))
+
+# [8.13.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.12.0...v8.13.0) (2026-09-26)
+
+
+### Features
+
+* **ios:** add a downsample prop to decode large images at about the view's size ([#1158](https://github.com/DylanVann/react-native-fast-image/issues/1158)) ([2816300](https://github.com/DylanVann/react-native-fast-image/commit/28163006bfd967fbe8bd7789091d925fd82a9f51)), closes [#896](https://github.com/DylanVann/react-native-fast-image/issues/896)
+
+# [8.12.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.11.0...v8.12.0) (2026-09-26)
+
+
+### Features
+
+* add a paused prop for animated images ([#1154](https://github.com/DylanVann/react-native-fast-image/issues/1154)) ([ca82135](https://github.com/DylanVann/react-native-fast-image/commit/ca82135fdadf98bcfd0180a20644989c02fe4e9e)), closes [#964](https://github.com/DylanVann/react-native-fast-image/issues/964)
+
+# [8.11.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.10.0...v8.11.0) (2026-09-26)
+
+
+### Features
+
+* add imageRendering: smooth or pixelated scaling ([#1155](https://github.com/DylanVann/react-native-fast-image/issues/1155)) ([fde8fcc](https://github.com/DylanVann/react-native-fast-image/commit/fde8fcce053c535a2de430f01480465d497f26d5)), closes [#926](https://github.com/DylanVann/react-native-fast-image/issues/926) [#927](https://github.com/DylanVann/react-native-fast-image/issues/927) [#916](https://github.com/DylanVann/react-native-fast-image/issues/916), thanks [@gabrieldonadel](https://github.com/gabrieldonadel), [@FancyFurret](https://github.com/FancyFurret)
+
+# [8.10.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.9.0...v8.10.0) (2026-09-26)
+
+
+### Features
+
+* include an error message in onError ([#1132](https://github.com/DylanVann/react-native-fast-image/issues/1132)) ([5ddd59b](https://github.com/DylanVann/react-native-fast-image/commit/5ddd59b34663f1eeb11aa1b57b4ecf8d5fa263d2)), closes [#200](https://github.com/DylanVann/react-native-fast-image/issues/200), thanks [@Romick2005](https://github.com/Romick2005)
+
+# [8.9.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.8.1...v8.9.0) (2026-09-26)
+
+
+### Features
+
+* add a loop prop for animated images ([#1128](https://github.com/DylanVann/react-native-fast-image/issues/1128)) ([7bb015f](https://github.com/DylanVann/react-native-fast-image/commit/7bb015f418cc27b29dd142ae8320f1a29786c928)), thanks [@cross19xx](https://github.com/cross19xx)
+
+## [8.8.1](https://github.com/DylanVann/react-native-fast-image/compare/v8.8.0...v8.8.1) (2026-09-26)
+
+
+### Bug Fixes
+
+* **types:** make PreloadResult a discriminated union on ok ([#1147](https://github.com/DylanVann/react-native-fast-image/issues/1147)) ([c5f8995](https://github.com/DylanVann/react-native-fast-image/commit/c5f899500470147ffb22998a22867cf2597945d0))
+
+# [8.8.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.7.0...v8.8.0) (2026-09-26)
+
+
+### Features
+
+* keep the previous image while a new source loads, and add recyclingKey ([#1142](https://github.com/DylanVann/react-native-fast-image/issues/1142)) ([4ae925a](https://github.com/DylanVann/react-native-fast-image/commit/4ae925a69ea3b1844dcbc535ded52e26f9a96f08)), closes [#747](https://github.com/DylanVann/react-native-fast-image/issues/747) [#171](https://github.com/DylanVann/react-native-fast-image/issues/171) [#983](https://github.com/DylanVann/react-native-fast-image/issues/983)
+
+# [8.7.0](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.43...v8.7.0) (2026-09-26)
+
+
+### Features
+
+* resolve preload with a result for each source ([#1133](https://github.com/DylanVann/react-native-fast-image/issues/1133)) ([0e49e03](https://github.com/DylanVann/react-native-fast-image/commit/0e49e032a4aec7cfd038e9c0c56d3c5a6272f8d9)), closes [#144](https://github.com/DylanVann/react-native-fast-image/issues/144), thanks [@AlessandroAries](https://github.com/AlessandroAries), [@nicomontanari](https://github.com/nicomontanari)
+
+## [8.6.43](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.42...v8.6.43) (2026-09-26)
+
+
+### Bug Fixes
+
+* **ios:** scale images larger than the view down with resizeMode center ([#1144](https://github.com/DylanVann/react-native-fast-image/issues/1144)) ([b4547f8](https://github.com/DylanVann/react-native-fast-image/commit/b4547f87a060133b4592c4b8d64b4afd07d7d8ac)), closes [#866](https://github.com/DylanVann/react-native-fast-image/issues/866)
+
+## [8.6.42](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.41...v8.6.42) (2026-09-25)
+
+
+### Bug Fixes
+
+* **ios:** finish images that were loading when the app went to the background ([#1139](https://github.com/DylanVann/react-native-fast-image/issues/1139)) ([9d3e408](https://github.com/DylanVann/react-native-fast-image/commit/9d3e4083075d90457510e65a1ad7b66f6f5f0614)), closes [#758](https://github.com/DylanVann/react-native-fast-image/issues/758)
+
+## [8.6.41](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.40...v8.6.41) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** send the app's cookies with image requests ([#1138](https://github.com/DylanVann/react-native-fast-image/issues/1138)) ([ab645ea](https://github.com/DylanVann/react-native-fast-image/commit/ab645ea2bcf22a6b60f4952049cde3d335e15fad)), thanks [@charpeni](https://github.com/charpeni)
+
+## [8.6.40](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.39...v8.6.40) (2026-09-25)
+
+
+### Bug Fixes
+
+* **ios:** allow newer SDWebImage versions ([#1136](https://github.com/DylanVann/react-native-fast-image/issues/1136)) ([02257d6](https://github.com/DylanVann/react-native-fast-image/commit/02257d69addc8949e49ab45197d8581f410d4cb1))
+
+## [8.6.39](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.38...v8.6.39) (2026-09-25)
+
+
+### Bug Fixes
+
+* don't send onProgress when the total size is unknown ([#1134](https://github.com/DylanVann/react-native-fast-image/issues/1134)) ([3c75cb3](https://github.com/DylanVann/react-native-fast-image/commit/3c75cb30671f063d497946bf79eb503a8e7fde2a))
+
+## [8.6.38](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.37...v8.6.38) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** cache images loaded with cache web ([#1129](https://github.com/DylanVann/react-native-fast-image/issues/1129)) ([96c7eea](https://github.com/DylanVann/react-native-fast-image/commit/96c7eea3caa5915a026e4c47b991362ed74fa39d))
+
+## [8.6.37](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.36...v8.6.37) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** play GIFs as many times as the file says ([#1127](https://github.com/DylanVann/react-native-fast-image/issues/1127)) ([e77c816](https://github.com/DylanVann/react-native-fast-image/commit/e77c816c3859d848e549b30f94f01c4c3fac6eeb))
+
+## [8.6.36](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.35...v8.6.36) (2026-09-25)
+
+
+### Bug Fixes
+
+* **ios:** fire onError for a data: uri that isn't an image ([#1126](https://github.com/DylanVann/react-native-fast-image/issues/1126)) ([2af0619](https://github.com/DylanVann/react-native-fast-image/commit/2af0619a35085f1cf4dd54c44457d7ce78e1d73a))
+
+## [8.6.35](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.34...v8.6.35) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** keep each view's own Glide request manager ([#1125](https://github.com/DylanVann/react-native-fast-image/issues/1125)) ([3a09bfb](https://github.com/DylanVann/react-native-fast-image/commit/3a09bfb0af262450fe0a79885e4533d7fcb09b5f))
+
+## [8.6.34](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.33...v8.6.34) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** send events through React Native's event dispatcher ([#1131](https://github.com/DylanVann/react-native-fast-image/issues/1131)) ([26259a9](https://github.com/DylanVann/react-native-fast-image/commit/26259a9c06db1f3e6ec59371b15b956b9f087fd3)), thanks [@cortinico](https://github.com/cortinico)
+
+## [8.6.33](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.32...v8.6.33) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** report the image's own size in onLoad ([#1124](https://github.com/DylanVann/react-native-fast-image/issues/1124)) ([53b936a](https://github.com/DylanVann/react-native-fast-image/commit/53b936ac2f2588894904cced8b3f067a6a90aae2)), closes [#608](https://github.com/DylanVann/react-native-fast-image/issues/608)
+
+## [8.6.32](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.31...v8.6.32) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** load 0×0 images on the legacy architecture ([#1122](https://github.com/DylanVann/react-native-fast-image/issues/1122)) ([38ea8e8](https://github.com/DylanVann/react-native-fast-image/commit/38ea8e86f9c6dc3b02364e6e02b7ca53e71da911))
+
+## [8.6.31](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.30...v8.6.31) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** declare the Glide annotations dependency ([#1120](https://github.com/DylanVann/react-native-fast-image/issues/1120)) ([f584f7c](https://github.com/DylanVann/react-native-fast-image/commit/f584f7c4576e3870cf9232a09fdf2064b5a7ffa5))
+
+## [8.6.30](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.29...v8.6.30) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** load asset:/ uris ([#1119](https://github.com/DylanVann/react-native-fast-image/issues/1119)) ([4931a9c](https://github.com/DylanVann/react-native-fast-image/commit/4931a9c71a22e5e7ba22c78f05cdd85b27ce205b))
+
+## [8.6.29](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.28...v8.6.29) (2026-09-25)
+
+
+### Bug Fixes
+
+* **ios:** send preload headers only with that image's request ([#1118](https://github.com/DylanVann/react-native-fast-image/issues/1118)) ([e49e947](https://github.com/DylanVann/react-native-fast-image/commit/e49e947260cd9ce7ed598b258b07ab5a520de8dd)), closes [#14](https://github.com/DylanVann/react-native-fast-image/issues/14)
+
+## [8.6.28](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.27...v8.6.28) (2026-09-25)
+
+
+### Bug Fixes
+
+* **ios:** send onLoadStart once when source and onLoadStart are set together ([#1114](https://github.com/DylanVann/react-native-fast-image/issues/1114)) ([094c75e](https://github.com/DylanVann/react-native-fast-image/commit/094c75e72e650dae88657706b985b0163658e786))
+
+## [8.6.27](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.26...v8.6.27) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** stop tracking a view's previous url when its source changes ([#1111](https://github.com/DylanVann/react-native-fast-image/issues/1111)) ([98db0b4](https://github.com/DylanVann/react-native-fast-image/commit/98db0b4d92da9e5024c8855fa1813a69591b44c0))
+
+## [8.6.26](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.25...v8.6.26) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** avoid excessive reloading on prop updates ([#1108](https://github.com/DylanVann/react-native-fast-image/issues/1108)) ([adedfac](https://github.com/DylanVann/react-native-fast-image/commit/adedfac7e55e3d358edbe18bd5f83fcec15166d3)), closes [#762](https://github.com/DylanVann/react-native-fast-image/issues/762)
+
+## [8.6.25](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.24...v8.6.25) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** load images when the view isn't in an Activity ([#1110](https://github.com/DylanVann/react-native-fast-image/issues/1110)) ([12c0d80](https://github.com/DylanVann/react-native-fast-image/commit/12c0d80f2f3346ef37720b61009413e614a02c7c))
+
+## [8.6.24](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.23...v8.6.24) (2026-09-25)
+
+
+### Bug Fixes
+
+* **android:** report sources without a uri and show defaultSource ([#1109](https://github.com/DylanVann/react-native-fast-image/issues/1109)) ([9ab4e3b](https://github.com/DylanVann/react-native-fast-image/commit/9ab4e3bdd44535c0480998f55a94d11430fbe4ce)), closes [#1028](https://github.com/DylanVann/react-native-fast-image/issues/1028)
+
+## [8.6.23](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.22...v8.6.23) (2026-09-24)
+
+
+### Bug Fixes
+
+* apply pointerEvents to FastImage's wrapper view ([#1105](https://github.com/DylanVann/react-native-fast-image/issues/1105)) ([548cabe](https://github.com/DylanVann/react-native-fast-image/commit/548cabec4e5cc38a3bb00b730136394198637707))
+
+## [8.6.22](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.21...v8.6.22) (2026-09-24)
+
+
+### Bug Fixes
+
+* size fallback images to fill FastImage ([#1107](https://github.com/DylanVann/react-native-fast-image/issues/1107)) ([9651f22](https://github.com/DylanVann/react-native-fast-image/commit/9651f2294012b55cce41f0722fb642a4e94c5583))
+
+## [8.6.21](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.20...v8.6.21) (2026-09-24)
+
+
+### Bug Fixes
+
+* use tintColor from style ([#1106](https://github.com/DylanVann/react-native-fast-image/issues/1106)) ([4e35e49](https://github.com/DylanVann/react-native-fast-image/commit/4e35e499aa608ee47dc4be46af3ce36fb538d592))
+
+## [8.6.20](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.19...v8.6.20) (2026-09-24)
+
+
+### Bug Fixes
+
+* **types:** use ColorValue for colors in ImageStyle ([#1104](https://github.com/DylanVann/react-native-fast-image/issues/1104)) ([59ed002](https://github.com/DylanVann/react-native-fast-image/commit/59ed0023f16a04a418c7483adce6a96639448dbb))
+
+## [8.6.19](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.18...v8.6.19) (2026-09-24)
+
+
+### Bug Fixes
+
+* **ios:** read the progress handler on the main queue ([#1102](https://github.com/DylanVann/react-native-fast-image/issues/1102)) ([c2d50ae](https://github.com/DylanVann/react-native-fast-image/commit/c2d50ae2936aa0e598828c3c598b3624304d1b27))
+
+## [8.6.18](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.17...v8.6.18) (2026-09-24)
+
+
+### Bug Fixes
+
+* **android:** unwrap the view's context to the ReactContext ([#1103](https://github.com/DylanVann/react-native-fast-image/issues/1103)) ([65d4724](https://github.com/DylanVann/react-native-fast-image/commit/65d4724dfbc6f954055b8a607ac0cbc65ae74070)), thanks [@thanakij](https://github.com/thanakij)
+
+## [8.6.17](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.16...v8.6.17) (2026-09-24)
+
+
+### Bug Fixes
+
+* load require()d images with fallback ([#1101](https://github.com/DylanVann/react-native-fast-image/issues/1101)) ([eadb9aa](https://github.com/DylanVann/react-native-fast-image/commit/eadb9aaaea14746a9ffa9cd545521e3db463dab0)), closes [#746](https://github.com/DylanVann/react-native-fast-image/issues/746)
+
+## [8.6.16](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.15...v8.6.16) (2026-09-24)
+
+
+### Bug Fixes
+
+* don't crash as a Touchable's direct child on iOS ([#1100](https://github.com/DylanVann/react-native-fast-image/issues/1100)) ([57c1068](https://github.com/DylanVann/react-native-fast-image/commit/57c1068a81f478211a281414afa4f2c8f41950d2))
+
+## [8.6.15](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.14...v8.6.15) (2026-09-24)
+
+
+### Bug Fixes
+
+* **android:** don't crash preloading a uri that can't be resolved ([#1099](https://github.com/DylanVann/react-native-fast-image/issues/1099)) ([53c5bc7](https://github.com/DylanVann/react-native-fast-image/commit/53c5bc7a34ae332cfbca36915c579d517310c336)), thanks [@anchalarora](https://github.com/anchalarora)
+
+## [8.6.14](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.13...v8.6.14) (2026-09-24)
+
+
+### Bug Fixes
+
+* **ios:** remove the tint when tintColor is cleared ([#1098](https://github.com/DylanVann/react-native-fast-image/issues/1098)) ([92d6a5c](https://github.com/DylanVann/react-native-fast-image/commit/92d6a5c1acd1802a760c31f8a98c2abe2cf267cc)), thanks [@sleeper-seth](https://github.com/sleeper-seth)
+
+## [8.6.13](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.12...v8.6.13) (2026-09-24)
+
+
+### Bug Fixes
+
+* **android:** set the namespace in build.gradle ([#1097](https://github.com/DylanVann/react-native-fast-image/issues/1097)) ([9284b54](https://github.com/DylanVann/react-native-fast-image/commit/9284b5463b682c9a9ee0c731effc3d6e5c4844d1)), thanks [@alexhernandez](https://github.com/alexhernandez)
+
+## [8.6.12](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.11...v8.6.12) (2026-09-24)
+
+
+### Bug Fixes
+
+* report onLayout from the wrapper view ([#1095](https://github.com/DylanVann/react-native-fast-image/issues/1095)) ([77d6c2d](https://github.com/DylanVann/react-native-fast-image/commit/77d6c2d12d493470582dd8f6f8277aedc7c166bf)), thanks [@praisedavid787](https://github.com/praisedavid787)
+
+## [8.6.11](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.10...v8.6.11) (2026-09-24)
+
+
+### Bug Fixes
+
+* **types:** add target to the onLoad event ([#1094](https://github.com/DylanVann/react-native-fast-image/issues/1094)) ([820770b](https://github.com/DylanVann/react-native-fast-image/commit/820770b53dbe67e89fc3ad145e177f5302335137)), thanks [@SRandazzo](https://github.com/SRandazzo)
+
+## [8.6.10](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.9...v8.6.10) (2026-09-24)
+
+
+### Bug Fixes
+
+* **types:** export the Cache type ([#1093](https://github.com/DylanVann/react-native-fast-image/issues/1093)) ([2d257c0](https://github.com/DylanVann/react-native-fast-image/commit/2d257c0ba65fff93eb6a6cdc35d3c41d0f3fcf55)), thanks [@ruslan-hontar](https://github.com/ruslan-hontar)
+
+## [8.6.9](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.8...v8.6.9) (2026-09-24)
+
+
+### Bug Fixes
+
+* allow React 19 as a peer dependency ([#1092](https://github.com/DylanVann/react-native-fast-image/issues/1092)) ([bc195e8](https://github.com/DylanVann/react-native-fast-image/commit/bc195e827d5a8b797c80cce5690fe3488d297796)), thanks [@Kabeer-Haseja](https://github.com/Kabeer-Haseja)
+
+## [8.6.8](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.7...v8.6.8) (2026-09-24)
+
+
+### Bug Fixes
+
+* don't crash on a defaultSource without a source, or a preload without a uri ([#1091](https://github.com/DylanVann/react-native-fast-image/issues/1091)) ([a1f247f](https://github.com/DylanVann/react-native-fast-image/commit/a1f247fd5150d3deaf50e13a4ed553023365a27d)), thanks [@kernelsrinivas](https://github.com/kernelsrinivas), [@BLANKAXU](https://github.com/BLANKAXU)
+
+## [8.6.7](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.6...v8.6.7) (2026-09-24)
+
+
+### Bug Fixes
+
+* **ios:** don't crash when an event handler is removed after loading ([#1088](https://github.com/DylanVann/react-native-fast-image/issues/1088)) ([8a1a7d7](https://github.com/DylanVann/react-native-fast-image/commit/8a1a7d7124fdca8baa5976216d6e56374174ed79)), closes [#504](https://github.com/DylanVann/react-native-fast-image/issues/504), thanks [@dimaportenko](https://github.com/dimaportenko)
+
+## [8.6.6](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.5...v8.6.6) (2026-09-24)
+
+
+### Bug Fixes
+
+* **ios:** draw tinted images with UIGraphicsImageRenderer ([#1087](https://github.com/DylanVann/react-native-fast-image/issues/1087)) ([068fcb7](https://github.com/DylanVann/react-native-fast-image/commit/068fcb71ad4d02c35db472676587114b838a7315)), closes [#1007](https://github.com/DylanVann/react-native-fast-image/issues/1007) [#1010](https://github.com/DylanVann/react-native-fast-image/issues/1010) [#1002](https://github.com/DylanVann/react-native-fast-image/issues/1002), thanks [@aman32767](https://github.com/aman32767), [@mertcankaraman](https://github.com/mertcankaraman)
+
+## [8.6.5](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.4...v8.6.5) (2026-09-24)
+
+
+### Bug Fixes
+
+* **types:** base ImageStyle on ViewStyle ([#1086](https://github.com/DylanVann/react-native-fast-image/issues/1086)) ([5a074ec](https://github.com/DylanVann/react-native-fast-image/commit/5a074ecc53df6619fd83c412553cf17340ff7288))
+
+## [8.6.4](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.3...v8.6.4) (2026-09-24)
+
+
+### Bug Fixes
+
+* **ios:** prevent tintColor crash on zero-size images ([#1082](https://github.com/DylanVann/react-native-fast-image/issues/1082)) ([57f6a2b](https://github.com/DylanVann/react-native-fast-image/commit/57f6a2b613dd00d6a6f7d80337d6010235cd0e8c)), thanks [@SamPeterberg](https://github.com/SamPeterberg)
+
 ## [8.6.3](https://github.com/DylanVann/react-native-fast-image/compare/v8.6.2...v8.6.3) (2022-10-31)
 
 

@@ -1,0 +1,26 @@
+# Taps the regression runner's `touch` cases, which need a real touch: the
+# touchable and pointer-events images. scripts/verify.mts runs it while the
+# runner shows that group, and the cases report their OK to the runner (see
+# ReactNativeFastImageExample/src/RegressionRunner.tsx). A crash fails the
+# group. By hand, with the runner showing the group (or the Regression tab
+# scrolled to it):
+#
+#   bunx maestro-runner --platform ios|android test -e APP_ID=<app id> maestro/touch.yaml
+#
+# App IDs:
+#   ReactNativeFastImageExample        iOS: org.reactjs.native.example.ReactNativeFastImageExample
+#                                      Android: com.reactnativefastimageexample
+#   ReactNativeFastImageExampleLegacy  iOS: org.reactjs.native.example.ReactNativeFastImageExampleLegacy
+#                                      Android: com.reactnativefastimageexamplelegacy
+#
+# Elements are selected by testID: on iOS, maestro-runner resolves those with
+# a WebDriverAgent lookup.
+appId: ${APP_ID}
+# Not one of the flows verify.mts runs after the runner (it excludes `runner`).
+tags:
+    - runner
+---
+- tapOn:
+      id: 'regression-touchable-image'
+- tapOn:
+      id: 'regression-pointer-events-target'

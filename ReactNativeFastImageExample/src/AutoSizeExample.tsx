@@ -5,9 +5,10 @@ import FastImage, { FastImageProps } from 'react-native-fast-image'
 import Section from './Section'
 import FeatureText from './FeatureText'
 import { useCacheBust } from './useCacheBust'
+import { imageUrl } from './imageServer'
+import { useReport } from './RunnerContext'
 
-const GIF_URL =
-    'https://cdn-images-1.medium.com/max/1600/1*-CY5bU4OqiJRox7G00sftw.gif'
+const IMAGE = imageUrl('picsum/1018-600x300.jpg')
 
 interface AutoSizingImageProps extends FastImageProps {
     onLoad?: (event: any) => void
@@ -53,7 +54,9 @@ const AutoSizingImage = (props: AutoSizingImageProps) => {
 }
 
 export const AutoSizeExample = () => {
-    const { bust, url } = useCacheBust(GIF_URL)
+    const { bust, url } = useCacheBust(IMAGE)
+    const [size, setSize] = useState<string>()
+    useReport('auto-size', size === undefined ? 'waiting' : 'OK')
     return (
         <View>
             <Section>
@@ -64,6 +67,11 @@ export const AutoSizeExample = () => {
                     style={styles.image}
                     width={200}
                     source={{ uri: url }}
+                    onLoad={(e) =>
+                        setSize(
+                            `${e.nativeEvent.width}x${e.nativeEvent.height}`,
+                        )
+                    }
                 />
             </SectionFlex>
         </View>

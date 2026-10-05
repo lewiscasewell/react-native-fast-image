@@ -49,3 +49,14 @@ coverage
 
 # TypeScript incremental compilation cache
 *.tsbuildinfo
+
+# maestro-runner output: screenshots saved next to the flows, and reports from
+# running flows by hand
+maestro-screenshots/
+/reports/
+
+# scripts/verify.mts output
+verify-output/
+
+# scripts/verify.mts --record output
+recordings/

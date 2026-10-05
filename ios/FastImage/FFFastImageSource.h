@@ -1,5 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <SDWebImage/SDWebImageDownloaderRequestModifier.h>
+#import <SDWebImage/SDWebImageCacheKeyFilter.h>
+#import <SDWebImage/SDWebImageDefine.h>
+#import <SDWebImage/SDImageLoader.h>
 
 typedef NS_ENUM(NSInteger, FFFPriority) {
     FFFPriorityLow,
@@ -20,14 +24,70 @@ typedef NS_ENUM(NSInteger, FFFCacheControl) {
 @property (nonatomic) NSURL* url;
 // priority for image request
 @property (nonatomic) FFFPriority priority;
+// whether the source set a priority (preload is low priority otherwise)
+@property (nonatomic) BOOL hasPriority;
 // headers for the image request
 @property (nonatomic) NSDictionary *headers;
 // cache control mode
 @property (nonatomic) FFFCacheControl cacheControl;
+// The key to cache the image under instead of its url, or nil.
+@property (nonatomic, copy) NSString *cacheKey;
+// With several sources, the image's size at this url in pixels (width ×
+// height × scale²), to pick the one closest to the view's size; 0 if unknown.
+@property (nonatomic) CGFloat pixelCount;
+// Whether the decoded image is kept in the memory cache (`memoryCache`,
+// default YES). Without it, it's only kept on disk: views don't leave it in
+// memory, and preload doesn't decode it.
+@property (nonatomic) BOOL memoryCache;
 
 - (instancetype)initWithURL:(NSURL *)url
                    priority:(FFFPriority)priority
                     headers:(NSDictionary *)headers
                cacheControl:(FFFCacheControl)cacheControl;
+
+// Adds this source's headers to its image requests.
+- (SDWebImageDownloaderRequestModifier *)requestModifier;
+
+// Caches the image under cacheKey, or nil without one.
+- (SDWebImageCacheKeyFilter *)cacheKeyFilter;
+
+// The load options for `cache`: web follows the HTTP cache, cacheOnly never
+// downloads. For views and preload alike.
+- (SDWebImageOptions)cacheOptions;
+
+// The loader for `cache: 'web'` images, whose HTTP cache is their own (see
+// webURLCache), for photo library images (ph://, see FFFPhotosLoader), or nil
+// for SDWebImage's shared one.
+- (id<SDImageLoader>)imageLoader;
+
+// Whether the source is a photo library image (ph://<localIdentifier>),
+// which is decoded at about the view's size.
+- (BOOL)isPhotoLibrary;
+
+// The error's message, or for an SVG image that couldn't be decoded because
+// the app doesn't have SDWebImageSVGCoder, what to add.
+- (NSString *)errorMessage:(NSError *)error;
+
+// A photo library image's own size in pixels (for onLoad when it comes from
+// a cache, where the size it was decoded from isn't recorded), or zero.
+- (CGSize)photoPixelSize;
+
+// Whether the data is an image FastImage can show: a format SDWebImage
+// recognizes (an SVG only if its first element is <svg>), or one ImageIO
+// reads that SDWebImage's check doesn't know (AVIF, ICO, ICNS, PSD).
++ (BOOL)isImageData:(NSData *)data;
+// The HTTP cache of `cache: 'web'` images: their own rather than the app's
+// shared NSURLCache, so clearDiskCache can empty it without the app's other
+// responses. 50 MB, as on Android.
++ (NSURLCache *)webURLCache;
+
+// After a load of this source failed: for a `cache: 'web'` image whose data
+// isn't an image, removes the response from the HTTP cache, which stored it as
+// it downloaded. Otherwise the next loads would get it from there until it
+// expires, and fail again. The web loader already doesn't store responses
+// that aren't images (e.g. a captive portal's HTML page); this is for data
+// that looks like an image but can't be decoded, or an app's own operation
+// class.
+- (void)forgetResponseAfterError:(NSError *)error;
 
 @end

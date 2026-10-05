@@ -16,6 +16,12 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/**/*.{h,m}"
 
   s.dependency 'React-Core'
-  s.dependency 'SDWebImage', '~> 5.15.5'
-  s.dependency 'SDWebImageWebPCoder', '~> 0.8.4'
+  # Any 5.x from 5.11.1, so apps can use newer versions (and share them with
+  # other libraries) without having to update. 5.18.7+ has the privacy
+  # manifest Apple requires.
+  s.dependency 'SDWebImage', '>= 5.11.1', '< 6.0'
+  s.dependency 'SDWebImageWebPCoder', '>= 0.8.4', '< 1.0'
+  # Photo library images (ph://). iOS only: it needs tvOS 10, and FastImage
+  # finds it at runtime, so a tvOS app can still add it.
+  s.ios.dependency 'SDWebImagePhotosPlugin', '>= 1.2.0', '< 2.0'
 end
